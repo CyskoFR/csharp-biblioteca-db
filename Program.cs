@@ -26,14 +26,14 @@
 using System.ComponentModel;
 using System.Data.SqlClient;
 
-string dbStringLink = "Data Source=localhost;" + "Initial Catalog = db - library;Integrated Security = True";
+string dbStringLink = "Data Source=localhost;Initial Catalog=db-library;Integrated Security=True";
 
-Library library = new Library();
+//Library library = new Library();
 
-User user = new User("Francesco", "Ricchiuti", "francesco@email.com", "12345678", "3450000000");
-Console.WriteLine($"{user.Name} {user.Surname}, {user.Email}, {user.Password}, {user.MobileNumber}");
+//User user = new User("Francesco", "Ricchiuti", "francesco@email.com", "12345678", "3450000000");
+//Console.WriteLine($"{user.Name} {user.Surname}, {user.Email}, {user.Password}, {user.MobileNumber}");
 
-library.AddUser(user);
+//library.AddUser(user);
 
 
 SqlConnection SqlConnection = new SqlConnection(dbStringLink);
