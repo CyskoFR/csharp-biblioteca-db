@@ -23,13 +23,40 @@
 //Con lo schema E/R precedente e osservando il codice che abbiamo scritto nel precedente progetto, scriviamo le query per creare le tabelle (potete anche usare l’editor di visual studio)
 //Una volta prodotto il DB modifichiamo il codice del vecchio programma in modo che possa leggere e scrivere dal database invece che dalle istanze di oggetti creati a runtime
 
-
 using System.ComponentModel;
+using System.Data.SqlClient;
+
+string dbStringLink = "Data Source=localhost;" + "Initial Catalog = db - library;Integrated Security = True";
 
 Library library = new Library();
 
-User user = new User("Francesco", "Ricchiuti", "francesco@email.com", "12345678", 3450000000);
+User user = new User("Francesco", "Ricchiuti", "francesco@email.com", "12345678", "3450000000");
 Console.WriteLine($"{user.Name} {user.Surname}, {user.Email}, {user.Password}, {user.MobileNumber}");
 
-
 library.AddUser(user);
+
+
+SqlConnection SqlConnection = new SqlConnection(dbStringLink);
+
+try
+{
+    SqlConnection.Open();
+
+    string queryBook = "INSERT INTO Book (Title, Author, Isbn, PageNumber) VALUES (@title, @author, @isbn, @pageNumber)";
+
+    SqlCommand cmd = new SqlCommand(queryBook, SqlConnection);
+    cmd.Parameters.Add(new SqlParameter("@title", "Harry Potter e la pietra filosofale"));
+    cmd.Parameters.Add(new SqlParameter("@author", "Cristiano Malgioglio"));
+    cmd.Parameters.Add(new SqlParameter("@isbn", "6273827364924"));
+    cmd.Parameters.Add(new SqlParameter("@pageNumber", 400));
+
+    int affectedRows = cmd.ExecuteNonQuery();
+}
+catch (Exception e)
+{
+    Console.WriteLine($"ERROR {e}");
+}
+finally
+{
+    SqlConnection.Close();
+}
